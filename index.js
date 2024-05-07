@@ -1,24 +1,21 @@
-function isMatch(s, p) {
-  const dp = Array.from(Array(s.length + 1), () =>
-    Array(p.length + 1).fill(false),
-  );
-  dp[0][0] = true;
-  for (let i = 1; i <= p.length; i++) {
-    if (p[i - 1] === "*") {
-      dp[0][i] = dp[0][i - 2];
-    }
+function addTwoNumbers(l1, l2) {
+  const dummy = new ListNode(0);
+  let p = l1,
+    q = l2,
+    curr = dummy;
+  let carry = 0;
+  while (p !== null || q !== null) {
+    const x = p !== null ? p.val : 0;
+    const y = q !== null ? q.val : 0;
+    const sum = x + y + carry;
+    carry = Math.floor(sum / 10);
+    curr.next = new ListNode(sum % 10);
+    curr = curr.next;
+    if (p !== null) p = p.next;
+    if (q !== null) q = q.next;
   }
-  for (let i = 1; i <= s.length; i++) {
-    for (let j = 1; j <= p.length; j++) {
-      if (s[i - 1] === p[j - 1] || p[j - 1] === ".") {
-        dp[i][j] = dp[i - 1][j - 1];
-      } else if (p[j - 1] === "*") {
-        dp[i][j] = dp[i][j - 2];
-        if (p[j - 2] === "." || s[i - 1] === p[j - 2]) {
-          dp[i][j] = dp[i][j] || dp[i - 1][j];
-        }
-      }
-    }
+  if (carry > 0) {
+    curr.next = new ListNode(carry);
   }
-  return dp[s.length][p.length];
+  return dummy.next;
 }
