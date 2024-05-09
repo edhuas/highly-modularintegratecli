@@ -1,2 +1,7 @@
-const nthElement = (arr, n = 0) =>
-  (n > 0 ? arr.slice(n, n + 1) : arr.slice(n))[0];
+function singleNumber(nums) {
+  let result = 0;
+  for (const num of nums) {
+    result ^= num;
+  }
+  return result;
+}
