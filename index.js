@@ -1,19 +1,14 @@
-function getHint(secret, guess) {
-  let bulls = 0;
-  let cows = 0;
-  const map = new Map();
-  for (let i = 0; i < secret.length; i++) {
-    if (secret[i] === guess[i]) {
-      bulls++;
-    } else {
-      map.set(secret[i], (map.get(secret[i]) || 0) + 1);
+const shellSort = (arr) => {
+  const n = arr.length;
+  for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
+    for (let i = gap; i < n; i++) {
+      const temp = arr[i];
+      let j;
+      for (j = i; j >= gap && arr[j - gap] > temp; j -= gap) {
+        arr[j] = arr[j - gap];
+      }
+      arr[j] = temp;
     }
   }
-  for (let i = 0; i < guess.length; i++) {
-    if (secret[i] !== guess[i] && map.has(guess[i]) && map.get(guess[i]) > 0) {
-      cows++;
-      map.set(guess[i], map.get(guess[i]) - 1);
-    }
-  }
-  return `${bulls}A${cows}B`;
-}
+  return arr;
+};
